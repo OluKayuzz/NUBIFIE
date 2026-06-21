@@ -1,0 +1,172 @@
+﻿@model NewsViewModel
+
+@{
+    ViewData["Title"] = "All News";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>NUBIFIE - All News</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Template CSS and JS files -->
+</head>
+
+<body>
+    <main id="main">
+        <section id="search-result" class="search-result">
+            <div class="container" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-lg-12 text-center mb-5">
+                        <h1 class="page-title">All News</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <!--<h3 class="category-title">Search Results</h3>-->
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="aside-title">Video</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="aside-title">Audio</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var obj in Model.NewsItems)
+                        {
+                            <div class="col-md-9">
+                                <div class="d-md-flex post-entry-2 small-img">
+                                    <a asp-controller="News" asp-action="Details" asp-route-id="@obj.Id" class="me-4 thumbnail">
+                                        <img src="~/news/Image/@obj.NewsCoverPicAddress" alt="" class="img-fluid">
+                                    </a>
+                                    <div>
+                                        <div class="post-meta"><span class="date">@obj.Category</span> <span class="mx-1">&bullet;</span> <span>@obj.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h4><a asp-controller="News" asp-action="Details" asp-route-id="@obj.Id">@obj.NewsTitle</a></h4>
+                                        @{
+                                            string truncatedText = obj.NewsContent.Length > 150 ? obj.NewsContent.Substring(0, 150) + "..." : obj.NewsContent;
+                                        }
+                                        <p>@truncatedText</p>
+                                        <div class="d-flex align-items-center author">
+                                            <div class="photo"><img src="~/news/Source/blank_Person2.png" alt="~/news/Source/blank_Person2.png" class="img-fluid"></div>
+                                            <div class="name">
+                                                <h3 class="m-0 p-0">@obj.NewsSource</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @if ((obj.NewsHasVideo) && (!string.IsNullOrEmpty(obj.NewsVideoAddress)))
+                                        {
+                                            <div class="aside-block">
+                                                <div class="video-post">
+                                                    <a href="~/news/Video/@obj.NewsVideoAddress" class="glightbox link-video" data-type="video">
+                                                        <span class="bi-play-fill"></span>
+                                                        <img src="~/news/Video/video-file_color.png" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if ((obj.NewsHasAudio) && (!string.IsNullOrEmpty(obj.NewsAudioAddress)))
+                                        {
+                                            <div class="aside-block">
+                                                <div class="audio-post">
+                                                    <audio controls class="container-fluid">
+                                                        <source src="~/news/Audio/@obj.NewsAudioAddress" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Paging -->
+                <div class="text-start py-4">
+                    <div class="custom-pagination">
+                        @if (Model.Pagination.CurrentPage > 1)
+                        {
+                            <a href="?pageNumber=@(Model.Pagination.CurrentPage - 1)" class="prev">Previous</a>
+                        }
+
+                        @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+                        {
+                            if (i == Model.Pagination.CurrentPage)
+                            {
+                                <a href="?pageNumber=@i" class="active">@i</a>
+                            }
+                            else
+                            {
+                                <a href="?pageNumber=@i">@i</a>
+                            }
+                        }
+
+                        @if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
+                        {
+                            <a href="?pageNumber=@(Model.Pagination.CurrentPage + 1)" class="next">Next</a>
+                        }
+                    </div>
+                </div>
+                <!-- End Paging -->
+
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-legal">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <div class="copyright">
+                            © Copyright <strong><span>NUBIFIE</span></strong>. All Rights Reserved
+                        </div>
+                        <div class="credits">
+                            Designed by <a href="https://flintvision.com/">FlintVision Technology</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+</html>

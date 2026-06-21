@@ -1,0 +1,519 @@
+﻿@model NUBIFIE_Web_Portal.Controllers.MemberRegistrationController.MyViewModel
+
+@{
+    ViewData["Title"] = "Member Registration";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>NUBIFIE - Register</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+        <!-- Template CSS and JS files -->
+        <style>
+            .hidden {
+                display: none;
+            }
+
+            .error-message {
+                color: red;
+                display: none;
+                font-size: smaller;
+            }
+
+            .custom-form {
+                border: 2px solid #28a745; /* Green border */
+                border-radius: 10px; /* Rounded corners */
+                padding: 20px; /* Padding inside the form */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            }
+
+            .custom-form2 {
+                border: 2px solid #90a700; /* Blue border */
+                border-radius: 10px; /* Rounded corners */
+                padding: 20px; /* Padding inside the form */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            }
+    </style>
+
+    </head>
+
+
+    <body>
+        <!-- ======= Main ======= -->
+
+        <main id="main">
+            <section id="contact" class="contact mb-5">
+                <div class="container" data-aos="fade-up">
+
+                    <div class="row">
+                        <div class="col-lg-12 text-center mb-5">
+                            <h1 class="page-title">Registration Form</h1>
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <div class="form mt-5">
+                            <h3 class="category-title"><i class="bi bi-pen-fill"></i>All entries are required</h3>
+                            <form asp-action="Create" asp-controller="MemberRegistration" method="post" role="form" class="custom-form" enctype="multipart/form-data">
+                                <div>
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="form-group text-center col-md-4">
+                                            <div class="row"><label for="PictureImg">Upload Your Picture</label></div>
+                                            <img id="imgPreview" src="~/img/blank_Person2.png" alt="" class="img-fluid img-thumbnail" style="max-width:250px; max-height:200px" title="Maximum image size of 200KB">
+                                            <input asp-for="ObjMR.PictureImg" type="file" name="PictureImg" class="form-control-file" id="iptPictureImg" accept="image/*" onchange="loadFile(event)">
+                                            <span asp-validation-for="ObjMR.PictureImg" class="text-danger"></span>
+                                            <div class="row">
+                                                <!--<div class="invalid-feedback">Please upload picture file. Maximum image size of 200KB</div>-->
+                                                <span id="errPictureImg" class="error-message">Please upload picture file. Maximum image size of 200KB</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.SectorId"></label>
+                                            <select asp-for="ObjMR.SectorId" name="Sector" class="form-control" id="selSector" required onchange="toggleForm(event, 'errSector')">
+                                                <option value="" disabled selected>Select Sector</option>
+                                                <option value="01">Agency and Mobile Banking Unit</option>
+                                                <option value="02">Bank</option>
+                                                <option value="03">Insurance</option>
+                                                <option value="04">Other Financial Institution</option>
+                                            </select>
+                                            <!--<div class="invalid-feedback">Please select the sector you belong to.</div>-->
+                                            <span asp-validation-for="ObjMR.SectorId" class="text-danger"></span>
+                                            <span id="errSector" class="error-message">Please select the sector you belong to.</span>
+                                       </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Title"></label>
+                                            <select asp-for="ObjMR.Title" name="Title" class="form-control" id="selTitle" required onchange="validateSelect('selTitle', 'errTitle')">
+                                                <option value="" disabled selected>Select Title</option>
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Miss">Miss</option>
+                                                <option value="Chief">Chief</option>
+                                                <option value="Dr">Dr</option>
+                                                <option value="Prof">Prof</option>
+                                                <option value="Ahl">Ahl</option>
+                                                <option value="Ahj">Ahj</option>
+                                            </select>
+                                            <!--<div class="invalid-feedback">Please select your title.</div>-->
+                                            <span asp-validation-for="ObjMR.Title" class="text-danger"></span>
+                                            <span id="errTitle" class="error-message">Please select your title.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Surname"></label>
+                                            <input asp-for="ObjMR.Surname" type="text" name="Surname" class="form-control" id="iptSurname" placeholder="Surname" required maxlength="255" pattern="[A-Za-z\s]+" oninput="validateText('iptSurname', 'errSurname')">
+                                            <!--<div class="invalid-feedback">Please enter a valid surname (letters only).</div>-->
+                                            <span asp-validation-for="ObjMR.Surname" class="text-danger"></span>
+                                            <span id="errSurname" class="error-message">Only letters and spaces are allowed.</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Othername"></label>
+                                            <input asp-for="ObjMR.Othername" type="text" name="Othername" class="form-control" id="iptOthername" placeholder="Other Name" required maxlength="255" pattern="[A-Za-z\s]+" oninput="validateText('iptOthername', 'errOthername')">
+                                            <!--<div class="invalid-feedback">Please enter a valid other name (letters only).</div>-->
+                                            <span asp-validation-for="ObjMR.Othername" class="text-danger"></span>
+                                            <span id="errOthername" class="error-message">Only letters and spaces are allowed.</span>
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.DOB"></label>
+                                            <input asp-for="ObjMR.DOB" type="date" name="DOB" class="form-control" id="iptDOB" placeholder="Date of Birth" required value="@DateTime.Today" oninput="validateNumbers('iptDOB', 'errDOB')">
+                                            <!--<div class="invalid-feedback">Please enter a valid date of birth.</div>-->
+                                            <span asp-validation-for="ObjMR.DOB" class="text-danger"></span>
+                                            <span id="errDOB" class="error-message">Please enter a valid date of birth.</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Gender"></label>
+                                            <select asp-for="ObjMR.Gender" name="Gender" class="form-control" id="selGender" required onchange="validateSelect('selGender', 'errGender')">
+                                                <option value="" disabled selected>Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <!--<div class="invalid-feedback">Please select your gender.</div>-->
+                                            <span asp-validation-for="ObjMR.Gender" class="text-danger"></span>
+                                            <span id="errGender" class="error-message">Please select your gender.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.ContactNumber"></label>
+                                            <input asp-for="ObjMR.ContactNumber" type="tel" name="ContactNumber" class="form-control" id="iptContactNumber" placeholder="Contact Phone Number" required pattern="\d{10,15}" oninput="validateNumbers('iptContactNumber', 'errContactNumber')">
+                                            <!--<div class="invalid-feedback">Please enter a valid contact number (10-15 digits).</div>-->
+                                            <span asp-validation-for="ObjMR.ContactNumber" class="text-danger"></span>
+                                            <span id="errContactNumber" class="error-message">Only numbers are allowed.</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Email"></label>
+                                            <input asp-for="ObjMR.Email" type="email" name="Email" class="form-control" id="iptEmail" placeholder="Email" required oninput="validateEmail('iptEmail', 'errEmail')" pattern="">
+                                            <!--<div class="invalid-feedback">Please enter a valid email address.</div>-->
+                                            <span asp-validation-for="ObjMR.Email" class="text-danger"></span>
+                                            <span id="errEmail" class="error-message">Please enter a valid email address.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="ObjMR.ResidentialAddress"></label>
+                                        <textarea asp-for="ObjMR.ResidentialAddress" name="ResidentialAddress" class="form-control" id="txaResidentialAddress" rows="3" placeholder="Residential Address" required oninput="validateNoWildcards('txaResidentialAddress', 'errResidentialAddress')"></textarea>
+                                        <!--<div class="invalid-feedback">Please enter your residential address.</div>-->
+                                        <span asp-validation-for="ObjMR.ResidentialAddress" class="text-danger"></span>
+                                        <span id="errResidentialAddress" class="error-message">No wildcard characters are allowed.</span>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.StateID"></label>
+                                        <select asp-for="ObjMR.StateID" name="State" class="form-control" id="selState" required onchange="validateSelect('selState', 'errState')">
+                                                <option value="" disabled selected>Select State</option>
+                                                <option value="1">Federal Capital Territory Abuja</option>
+                                                <option value="2">Abia</option>
+                                                <option value="3">Adamawa</option>
+                                                <option value="4">Akwa Ibom</option>
+                                                <option value="5">Anambra</option>
+                                                <option value="6">Bauchi</option>
+                                                <option value="7">Bayelsa</option>
+                                                <option value="8">Benue</option>
+                                                <option value="9">Borno</option>
+                                                <option value="10">Cross River</option>
+                                                <option value="11">Delta</option>
+                                                <option value="12">Ebonyi</option>
+                                                <option value="13">Edo</option>
+                                                <option value="14">Ekiti</option>
+                                                <option value="15">Enugu</option>
+                                                <option value="16">Gombe</option>
+                                                <option value="17">Imo</option>
+                                                <option value="18">Jigawa</option>
+                                                <option value="19">Kaduna</option>
+                                                <option value="20">Kano</option>
+                                                <option value="21">Katsina</option>
+                                                <option value="22">Kebbi</option>
+                                                <option value="23">Kogi</option>
+                                                <option value="24">Kwara</option>
+                                                <option value="25">Lagos</option>
+                                                <option value="26">Nasarawa</option>
+                                                <option value="27">Niger</option>
+                                                <option value="28">Ogun</option>
+                                                <option value="29">Ondo</option>
+                                                <option value="30">Osun</option>
+                                                <option value="31">Oyo</option>
+                                                <option value="32">Plateau</option>
+                                                <option value="33">Rivers</option>
+                                                <option value="34">Sokoto</option>
+                                                <option value="35">Taraba</option>
+                                                <option value="36">Yobe</option>
+                                                <option value="37">Zamfara</option>
+                                            </select>
+                                            <!--<div class="invalid-feedback">Please select your State of residence.</div>-->
+                                            <span asp-validation-for="ObjMR.StateID" class="text-danger"></span>
+                                            <span id="errState" class="error-message">Please select your State of residence.</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.LGAID"></label>
+                                            <select asp-for="ObjMR.LGAID" name="LGA" class="form-control" id="selLGA" required onchange="validateSelect('selLGA', 'errLGA')">
+                                                <option value="" disabled selected>Select LGA</option>
+                                            </select>
+                                            <!--<div class="invalid-feedback">Please select your LGA of residence.</div>-->
+                                            <span asp-validation-for="ObjMR.LGAID" class="text-danger"></span>
+                                            <span id="errLGA" class="error-message">Please select your LGA of residence.</span>
+                                        </div>
+                                    </div>
+
+                                    <div id="additionalForm" class="hidden custom-form2">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.MMOId"></label>
+                                                <select asp-for="ObjMR.MMOId" name="MMO" class="form-control" id="selMMO" onchange="validateSelect('selMMO', 'errMMO')">
+                                                    <option value="" disabled selected>Select MMO</option>
+                                                    @foreach (var obj in Model.MMO)
+                                                    {
+                                                        <option value="@obj.Value">@obj.Text</option>
+                                                    }
+                                                </select>
+                                                <!--<div class="invalid-feedback">Please select your Mobile Money Operator.</div>-->
+                                                <span id="errMMO" class="error-message">Please select your Mobile Money Operator.</span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.BusinessName"></label>
+                                                <input asp-for="ObjMR.BusinessName" type="text" name="BusinessName" class="form-control" id="iptBusinessName" placeholder="Business Name" oninput="validateNoWildcards('iptBusinessName', 'errBusinessName')">
+                                                <!--<div class="invalid-feedback">Please enter your Business name.</div>-->
+                                                <span id="errBusinessName" class="error-message">No wildcard characters are allowed.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="ObjMR.BusinessAddress"></label>
+                                            <input asp-for="ObjMR.BusinessAddress" type="text" name="BusinessAddress" class="form-control" id="iptBusinessAddress" placeholder="Business Address" oninput="validateNoWildcards('iptBusinessAddress', 'errBusinessAddress')">
+                                            <span id="errBusinessAddress" class="error-message">No wildcard characters are allowed.</span>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.AdminOfficeStateID"></label>
+                                            <select asp-for="ObjMR.AdminOfficeStateID" name="AdminOfficeState" class="form-control" id="selAdminOfficeState" onchange="validateSelect('selAdminOfficeState', 'errAdminOfficeState')">
+                                                    <option value="" disabled selected>Select State</option>
+                                                    <option value="1">Federal Capital Territory Abuja</option>
+                                                    <option value="2">Abia</option>
+                                                    <option value="3">Adamawa</option>
+                                                    <option value="4">Akwa Ibom</option>
+                                                    <option value="5">Anambra</option>
+                                                    <option value="6">Bauchi</option>
+                                                    <option value="7">Bayelsa</option>
+                                                    <option value="8">Benue</option>
+                                                    <option value="9">Borno</option>
+                                                    <option value="10">Cross River</option>
+                                                    <option value="11">Delta</option>
+                                                    <option value="12">Ebonyi</option>
+                                                    <option value="13">Edo</option>
+                                                    <option value="14">Ekiti</option>
+                                                    <option value="15">Enugu</option>
+                                                    <option value="16">Gombe</option>
+                                                    <option value="17">Imo</option>
+                                                    <option value="18">Jigawa</option>
+                                                    <option value="19">Kaduna</option>
+                                                    <option value="20">Kano</option>
+                                                    <option value="21">Katsina</option>
+                                                    <option value="22">Kebbi</option>
+                                                    <option value="23">Kogi</option>
+                                                    <option value="24">Kwara</option>
+                                                    <option value="25">Lagos</option>
+                                                    <option value="26">Nasarawa</option>
+                                                    <option value="27">Niger</option>
+                                                    <option value="28">Ogun</option>
+                                                    <option value="29">Ondo</option>
+                                                    <option value="30">Osun</option>
+                                                    <option value="31">Oyo</option>
+                                                    <option value="32">Plateau</option>
+                                                    <option value="33">Rivers</option>
+                                                    <option value="34">Sokoto</option>
+                                                    <option value="35">Taraba</option>
+                                                    <option value="36">Yobe</option>
+                                                    <option value="37">Zamfara</option>
+                                                </select>
+                                                <span id="errAdminOfficeState" class="error-message">Select State of Business.</span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.AdminOfficeLGAID"></label>
+                                                <select asp-for="ObjMR.AdminOfficeLGAID" name="AdminOfficeLGA" class="form-control" id="selAdminOfficeLGA" onchange="validateSelect('selAdminOfficeLGA', 'errAdminOfficeLGA')">
+                                                    <option value="" disabled selected>Select LGA</option>
+                                                </select>
+                                                <span id="errAdminOfficeLGA" class="error-message">Select LGA of Business.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.NumberOfOutlets"></label>
+                                                <input asp-for="ObjMR.NumberOfOutlets" type="number" name="NumberOfOutlets" class="form-control" id="iptNumberOfOutlets" placeholder="Number of Outlets" min="1">
+                                                <span id="errNumberOfOutlets" class="error-message">Enter valid Number of outlets</span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label asp-for="ObjMR.BusinessLocation"></label>
+                                                <input asp-for="ObjMR.BusinessLocation" type="text" name="BusinessLocation" class="form-control" id="iptBusinessLocation" placeholder="Business Location" oninput="validateNoWildcards('iptBusinessLocation', 'errBusinessLocation')">
+                                                <span id="errBusinessLocation" class="error-message">No wildcard characters are allowed.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col">
+                                            <center>
+                                                <span class="badge rounded-pill bg-info text-dark">Authentication credentials</span>
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <label asp-for="ObjMR.UserID"></label>
+                                        <input asp-for="ObjMR.UserID" type="text" name="UserID" class="form-control" id="iptUserID" placeholder="User ID" maxlength="100" oninput="validateNoWildcards('iptUserID', 'errUserID')">
+                                        <span id="errUserID" class="error-message">No wildcard characters are allowed.</span>
+                                    </div>
+
+                                    <div class="form-group text-center">
+                                        <label style="font-size:small; font-weight:bold">Password minimum criteria:</label><br />
+                                        <label style="font-size:small">Must contain at least a capital letter.</label><br />
+                                        <label style="font-size:small">Must contain at least a number.</label><br />
+                                        <label style="font-size:small">Must be minimum of 8 characters, with no spaces.</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.Password"></label>
+                                            <input asp-for="ObjMR.Password" type="password" name="Password" class="form-control" id="iptPassword" placeholder="Password" maxlength="100" required oninput="validatePassword('iptPassword', 'errPassword')">
+                                            <!--<div class="invalid-feedback">Please enter a valid password.</div>-->
+                                            <span id="errPassword" class="error-message">Password has not met minimum criteria.</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="ObjMR.ConfirmPassword"></label>
+                                            <input asp-for="ObjMR.ConfirmPassword" type="password" name="ConfirmPassword" class="form-control" id="iptConfirmPassword" placeholder="Confirm Password" >
+                                            <!--<div class="invalid-feedback">Invalid password confirmation.</div>-->
+                                            <span id="errConfirmPassword" class="error-message">Invalid password confirmation.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-check">
+                                            <input asp-for="ObjMR.Agreement" type="checkbox" name="Agreement" class="form-check-input" id="iptAgreement"  title="I agree to all terms and conditions.">
+                                            <label class="form-check-label" for="iptAgreement">I agree to all terms and conditions.</label>
+                                        <div class="row">
+                                            <!--<div class="invalid-feedback">You must agree to all terms and conditions.</div>-->
+                                            <span id="errAgreement" class="error-message">You must agree to all terms and conditions.</span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary" id="btnRegister"><i class="bi bi-send"></i> Register</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </section>
+
+        </main>
+        <!-- End #main -->
+        <!-- ======= Footer ======= -->
+        <footer id="footer" class="footer">
+
+            <div class="footer-legal">
+                <div class="container">
+
+                    <div class="row justify-content-between">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            <div class="copyright">
+                                © Copyright <strong><span>NUBIFIE</span></strong>. All Rights Reserved
+                            </div>
+
+                            <div class="credits">
+                                <!-- All the links in the footer should remain intact. -->
+                                <!-- You can delete the links only if you purchased the pro version. -->
+                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/herobiz-bootstrap-business-template/ -->
+                                Designed by <a href="https://flintvision.com/">FlintVision Technology</a>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
+                                <a href="#" title="X (Twitter)" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" title="Facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" title="Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" title="Skype" class="google-plus"><i class="bi bi-skype"></i></a>
+                                <!-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </footer>
+
+        <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+        <!-- Vendor JS Files -->
+        <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="~/assets/vendor/aos/aos.js"></script>
+        <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+        <!-- Template Main JS File -->
+        <script src="~/assets/js/main.js"></script>
+
+        <script>
+            function loadFile(event) {
+                var image = document.getElementById('imgPreview');
+                image.src = URL.createObjectURL(event.target.files[0]);
+                image.onload = function () {
+                    URL.revokeObjectURL(image.src) // free memory
+                }
+            }
+
+            $(document).ready(function () {
+                $('#selState').change(function () {
+                    var stateId = $(this).val();
+                    if (stateId) {
+                        $.ajax({
+                            url: '/MemberRegistration/GetLGA?stateId=' + stateId,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (data) {
+                                $('#selLGA').empty();
+                                $('#selLGA').append('<option value="" disabled selected>Select LGA</option>');
+                                $.each(data, function (key, value) {
+                                    $('#selLGA').append('<option value="' + value.id + '">' + value.name + '</option>');
+                                });
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(document).ready(function () {
+                $('#selAdminOfficeState').change(function () {
+                    var stateId = $(this).val();
+                    if (stateId) {
+                        $.ajax({
+                            url: '/MemberRegistration/GetLGA?stateId=' + stateId,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (data) {
+                                $('#selAdminOfficeLGA').empty();
+                                $('#selAdminOfficeLGA').append('<option value="" disabled selected>Select LGA</option>');
+                                $.each(data, function (key, value) {
+                                    $('#selAdminOfficeLGA').append('<option value="' + value.id + '">' + value.name + '</option>');
+                                });
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <script src="~/js/registerentryvalidation.js"></script>
+        <script src="~/js/registersubmitvalidation.js"></script>
+    </body>
+
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

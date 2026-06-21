@@ -1,0 +1,378 @@
+﻿@model NUBIFIE_Web_Portal.Controllers.HomeController.MyViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>NUBIFIE</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- =======================================================
+    * Template Name: NUBIFIE
+    * Template URL: https://bootstrapmade.com/NUBIFIE-bootstrap-blog-template/
+    * Updated: Mar 17 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https:///bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+    <main id="main">
+
+        <!-- ======= Hero Slider Section ======= -->
+        <section id="hero-slider" class="hero-slider">
+            <div class="container-md" data-aos="fade-in">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="swiper sliderFeaturedPosts">
+                            <div class="swiper-wrapper">
+                                @foreach (var obj in Model.ObjSysOptionList)
+                                {
+                                    <div class="swiper-slide">
+                                        <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url(@obj.ImageURL1);">
+                                            <div class="img-bg-inner">
+                                                <h2>
+                                                    @obj.ImageTitle1
+                                                </h2>
+                                                <p></p>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url(@obj.ImageURL2);">
+                                            <div class="img-bg-inner">
+                                                <h2>@obj.ImageTitle2</h2>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url(@obj.ImageURL3);">
+                                            <div class="img-bg-inner">
+                                                <h2>@obj.ImageTitle3</h2>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url(@obj.ImageURL4);">
+                                            <div class="img-bg-inner">
+                                                <h2>@obj.ImageTitle4</h2>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url(@obj.ImageURL5);">
+                                            <div class="img-bg-inner">
+                                                <h2>@obj.ImageTitle5</h2>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="custom-swiper-button-next">
+                                <span class="bi-chevron-right"></span>
+                            </div>
+                            <div class="custom-swiper-button-prev">
+                                <span class="bi-chevron-left"></span>
+                            </div>
+
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ======= End Hero Slider Section ==== -->
+
+        <!-- ======= Trending News Setion ======= -->
+        <section id="posts" class="posts">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header d-flex justify-content-between align-items-center mb-5">
+                    <h2>Trending News</h2>
+                    <div><a asp-controller="News" asp-action="Index" class="more">See All News</a></div>
+                </div>
+
+                <div class="row g-5">
+                    @{
+                        var newsList = Model.ObjNewsList.ToList();
+                        var obj0 = newsList[0];
+                        <div class="col-lg-4">
+                            <div class="post-entry-1 lg">
+                                <a asp-controller="News" asp-action="Details" asp-route-id="@obj0.Id"><img src="~/news/Image/@obj0.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                <div class="post-meta"><span class="date">@obj0.Category</span> <span class="mx-1">&bullet;</span> <span>@obj0.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj0.Id">@obj0.NewsTitle</a></h2>
+                                @{
+                                    string truncatedText = obj0.NewsContent.Length > 750 ? obj0.NewsContent.Substring(0, 750) + "..." : obj0.NewsContent;
+                                }
+                                <p class="mb-4 d-block">@truncatedText</p>
+
+                                <div class="d-flex align-items-center author">
+                                    <div class="photo"><img src="~/news/Source/@obj0.NewsSourceImgAddress" alt="" class="img-fluid"></div>
+                                    <div class="name">
+                                        <h3 class="m-0 p-0">@obj0.NewsSource</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        var obj1 = newsList[1];
+                        var obj2 = newsList[2];
+                        var obj3 = newsList[3];
+                        var obj4 = newsList[4];
+                        var obj5 = newsList[5];
+                        var obj6 = newsList[6];
+                        <div class="col-lg-8">
+                            <div class="row g-5">
+                                <div class="col-lg-4 border-start custom-border">
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj1.Id"><img src="~/news/Image/@obj1.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj1.Category</span> <span class="mx-1">&bullet;</span> <span>@obj1.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj1.Id">@obj1.NewsTitle</a></h2>
+                                    </div>
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj2.Id"><img src="~/news/Image/@obj2.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj2.Category</span> <span class="mx-1">&bullet;</span> <span>@obj2.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj2.Id">@obj2.NewsTitle</a></h2>
+                                    </div>
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj3.Id"><img src="~/news/Image/@obj3.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj3.Category</span> <span class="mx-1">&bullet;</span> <span>@obj3.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj3.Id">@obj3.NewsTitle</a></h2>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 border-start custom-border">
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj4.Id"><img src="~/news/Image/@obj4.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj4.Category</span> <span class="mx-1">&bullet;</span> <span>@obj4.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj4.Id">@obj4.NewsTitle</a></h2>
+                                    </div>
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj5.Id"><img src="~/news/Image/@obj5.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj5.Category</span> <span class="mx-1">&bullet;</span> <span>@obj5.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj5.Id">@obj5.NewsTitle</a></h2>
+                                    </div>
+                                    <div class="post-entry-1">
+                                        <a asp-controller="News" asp-action="Details" asp-route-id="@obj6.Id"><img src="~/news/Image/@obj6.NewsCoverPicAddress" alt="" class="img-fluid"></a>
+                                        <div class="post-meta"><span class="date">@obj6.Category</span> <span class="mx-1">&bullet;</span> <span>@obj6.NewsDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h2><a asp-controller="News" asp-action="Details" asp-route-id="@obj6.Id">@obj6.NewsTitle</a></h2>
+                                    </div>
+                                </div>
+
+                                <!-- About NUBIFIE Section -->
+                                <div class="col-lg-4">
+
+                                    <div class="trending text-center">
+                                        <h3>About us</h3>
+                                        <ul class="trending-post">
+                                            <li>
+                                                <a asp-controller="Menu" asp-action="Index">
+                                                    <span class="author">About us</span>
+                                                    <span class="number">1</span>
+                                                    <p></p>
+                                                    <img src="~/img/display/About-Us.jpeg" alt="" class="rounded-circle" width="100" height="100">
+                                                    <h3>The organization of workers into Trade Union has been demonstrated to be ...</h3>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Menu" asp-action="Objective">
+                                                    <span class="author">Our Objectives</span>
+                                                    <span class="number">2</span>
+                                                    <p></p>
+                                                    <img src="~/img/display/Our_Objectives2.png" alt="" class="rounded-circle" width="100" height="100">
+                                                    <h3>To organize and unite employees in the Financial industry. To promote and ...</h3>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Menu" asp-action="Mission">
+                                                    <span class="author">Our Mission</span>
+                                                    <span class="number">3</span>
+                                                    <p></p>
+                                                    <img src="~/img/display/OurMission2.png" alt="" class="rounded-circle" width="100" height="100">
+                                                    <h3>To organise Workers in the Finance, Insurance &amp; Allied Institutions, defend Workers ...</h3>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div> 
+                                <!-- End About NUBIFIE Section -->
+                            </div>
+                        </div>
+                    }
+                </div> <!-- End .row -->
+            </div>
+        </section> 
+        <!-- ======= End Trending News Section == -->
+
+        <!-- ======= Events Section ======= -->
+        <section class="category-section">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header d-flex justify-content-between align-items-center mb-5">
+                    <h2>Events</h2>
+                    <div><a asp-controller="Event" asp-action="Index" class="more">See All Events</a></div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-9 order-md-2">
+                        @{
+                            var eventList = Model.ObjEventList.ToList();
+                            if (eventList.Count > 0)
+                            {
+                                var obj10 = eventList[0];
+
+                                <div class="d-lg-flex post-entry-2">
+                                    <a asp-controller="Event" asp-action="Details" asp-route-id="@obj10.Id" class="me-4 thumbnail d-inline-block mb-4 mb-lg-0">
+                                        <img src="~/events/ImageVideo/@obj10.EventCoverPicAddress" alt="" class="img-fluid">
+                                    </a>
+                                    <div>
+                                        <div class="post-meta"><span>@obj10.EventDate.ToString("dd MMMM yyyy")</span></div>
+                                        <h3><a asp-controller="Event" asp-action="Details" asp-route-id="@obj10.Id">@obj10.EventTitle</a></h3>
+                                        @{
+                                            string truncatedText1 = obj10.EventContent.Length > 300 ? obj10.EventContent.Substring(0, 300) + "..." : obj10.EventContent;
+                                        }
+                                        <p>@truncatedText1</p>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    @if (eventList.Count > 2) 
+                                    { 
+                                        var obj12 = eventList[2]; 
+                                        <div class="post-entry-1 border-bottom">
+                                            <a asp-controller="Event" asp-action="Details" asp-route-id="@obj12.Id"><img src="~/events/ImageVideo/@obj12.EventCoverPicAddress" alt="" class="img-fluid"></a>
+                                            <div class="post-meta"><span>@obj12.EventDate.ToString("dd MMMM yyyy")</span></div>
+                                            <h2 class="mb-2"><a asp-controller="Event" asp-action="Details" asp-route-id="@obj12.Id">@obj12.EventTitle</a></h2>
+                                            @{
+                                                string truncatedText1 = obj12.EventContent.Length > 200 ? obj12.EventContent.Substring(0, 200) + "..." : obj12.EventContent;
+                                            }
+                                            <p>@truncatedText1</p>
+                                        </div>
+                                    }
+@*
+                                    @if (eventList.Count > 3) 
+                                    {
+                                        var obj13 = eventList[3]; 
+                                        <div class="post-entry-1">
+                                            <div class="post-meta"><span>@obj13.EventDate.ToString("dd MMMM yyyy")</span></div>
+                                            <h2 class="mb-2"><a asp-controller="Event" asp-action="Details" asp-route-id="@obj13.Id">@obj13.EventTitle</a></h2>
+                                        </div>
+                                    }
+*@
+                                </div>
+                                <div class="col-lg-8">
+                                    @if (eventList.Count > 1) 
+                                    {
+                                        var obj11 = eventList[1]; 
+                                        <div class="post-entry-1">
+                                            <a asp-controller="Event" asp-action="Details" asp-route-id="@obj11.Id">
+                                                <img src="~/events/ImageVideo/@obj11.EventCoverPicAddress" alt="" class="img-fluid">
+                                            </a>
+                                            <div class="post-meta"><span>@obj11.EventDate.ToString("dd MMMM yyyy")</span></div>
+                                            <h2 class="mb-2"><a asp-controller="Event" asp-action="Details" asp-route-id="@obj11.Id">@obj11.EventTitle</a></h2>
+                                            @{
+                                                string truncatedText1 = obj11.EventContent.Length > 200 ? obj11.EventContent.Substring(0, 200) + "..." : obj11.EventContent;
+                                            }
+                                            <p>@truncatedText1</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="trending">
+                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                <h3>Activities</h3>
+                                <div><a asp-controller="Activity_" asp-action="Index" class="more">See All</a></div>
+                            </div>
+                            <ul class="trending-post">
+                                @foreach (var obj20 in Model.ObjActivityList.ToList())
+                                {                              
+                                    <div class="post-entry-1 border-bottom">
+                                        <div class="post-meta"><span>@obj20.ActivityDate.ToString("dd MMMM yyyy")</span></div>
+                                        @{
+                                            string truncatedText2 = obj20.ActivityTitle.Length > 54 ? obj20.ActivityTitle.Substring(0, 54) + "..." : obj20.ActivityTitle;
+                                        }
+                                        <h2 class="mb-2"><a asp-controller="Activity_" asp-action="Details" asp-route-id="@obj20.Id">@truncatedText2</a></h2>
+                                    </div>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section><!-- End Events Section -->
+
+    </main><!-- End #main -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+
+        <div class="footer-legal">
+            <div class="container">
+
+                <div class="row justify-content-between">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <div class="copyright">
+                            © Copyright <strong><span>NUBIFIE</span></strong>. All Rights Reserved
+                        </div>
+
+                        <div class="credits">
+                            <!-- All the links in the footer should remain intact. -->
+                            <!-- You can delete the links only if you purchased the pro version. -->
+                            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/herobiz-bootstrap-business-template/ -->
+                            Designed by <a href="https://flintvision.com/">FlintVision Technology</a>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
+                            <a href="#" title="X (Twitter)" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" title="Facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" title="Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" title="Skype" class="google-plus"><i class="bi bi-skype"></i></a>
+                            <!-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+
+</html>

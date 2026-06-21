@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NUBIFIE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/NUBIFIE_Web_Portal.styles.css" asp-append-version="true" />
+
+    <!-- Favicons -->
+    <link href="~/img/nubifie_logo3.jpg" rel="icon">
+    <link href="~/img/nubifie_logo3.jpg" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS Files -->
+    <link href="~/assets/css/variables.css" rel="stylesheet">
+    <link href="~/assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+@*     <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NUBIFIE_Web_Portal</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+ *@
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top bg-green">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a asp-controller="Home" asp-action="Index" title="National Union of Banks, Insurance, and Financial Institutions Employees"
+               class="logo d-flex align-items-center">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="~/img/nubifie_logo3.jpg" alt="">
+                <h1>NUBIFIE</h1>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="dropdown">
+                        <a href=""><span>About</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a asp-controller="Menu" asp-action="Index">About us</a></li>
+                            <li><a asp-controller="Menu" asp-action="Objective">Our Objectives</a></li>
+                            <li><a asp-controller="Menu" asp-action="Mission">Our Mission</a></li>
+                            <li><a href="#">Our Partners</a></li>
+                            <!--<li><a href="#">Our History</a></li>-->
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#"><span>Organization</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a asp-controller="Menu" asp-action="NACM">NACM</a></li>
+                            <li><a asp-controller="Menu" asp-action="NSS_ZCS">NSS/ZCS</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="category.html"><span>Gallary</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li class="dropdown">
+                                <a href="#"><span>Event</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li title="Order by title"> @Html.ActionLink("Title", "EventTitle", "Menu")</li><!-- A modal frame comes up to receive the search text. -->
+                                    <li title="Order by most recent"> @Html.ActionLink("Year", "EventDate", "Menu")</li><!-- Or go to a page listing Titles alphabetically, years -->
+                                    <li title="Order by most viewed"> @Html.ActionLink("Top view", "EventTopView", "Menu")</li><!-- in descending order, and the top 10 views. -->
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#"><span>Activity</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li title="Order by title"> @Html.ActionLink("Title", "ActivityTitle", "Menu")</li><!-- A modal frame comes up to receive the search text. -->
+                                    <li title="Order by most recent"> @Html.ActionLink("Year", "ActivityDate", "Menu")</li><!-- Or go to a page listing Titles alphabetically, years -->
+                                    <li title="Order by most viewed"> @Html.ActionLink("Top view", "ActivityTopView", "Menu")</li><!-- in descending order, and the top 10 views. -->
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a asp-controller="Menu" asp-action="Contact">Contact</a></li>
+                    <li><a asp-controller="MemberRegistration" asp-action="Register">Join</a></li>
+                </ul>
+            </nav><!-- .navbar -->
+
+            <div class="position-relative">
+@*
+                <a href="#" class="mx-2 facebook color-black"><span title="Facebook" class="bi-facebook"></span></a>
+                <a href="#" class="mx-2 twitter color-black"><span title="X (Twitter)" class="bi-twitter"></span></a>
+                <a href="#" class="mx-2 instagram color-black"><span title="Instagram" class="bi-instagram"></span></a>
+*@
+                <a href="#" class="mx-2 avatar-group-dark color-black"><span title="Members" class="bi-people-fill"></span>Memebers</a>
+
+                <a href="#" class="mx-2 color-primary-dark js-search-open"><span title="Search NUBIFIE" class="bi-search"></span></a>
+
+                <a href="#" class="mx-2 color-black"><span title="Sign in" class="bi-person-fill-lock"></span></a>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+
+                <!-- ======= Search Form ======= -->
+                <div class="search-form-wrap js-search-form-wrap">
+                    <form action="" class="search-form">
+                        <span class="icon bi-search"></span>
+                        <input type="text" placeholder="Search" class="form-control">
+                        <button class="btn js-search-close"><span class="bi-x"></span></button>
+                    </form>
+                </div><!-- End Search Form -->
+
+            </div>
+
+        </div>
+
+    </header><!-- End Header -->
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+@*     <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - NUBIFIE_Web_Portal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+ *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
