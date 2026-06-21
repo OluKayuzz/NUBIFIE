@@ -46,3 +46,5 @@ This project is actively developed and maintained, with continuous improvements 
 ## Purpose
 
 This system was built to modernize communication and information sharing within the NUBIFIE organization by providing a reliable, scalable, and easy-to-manage digital platform.
+
+© 2026 Oluwakayode Fagbemi. This project is shared for portfolio and evaluation purposes. Unauthorized redistribution or commercial use is not permitted.
